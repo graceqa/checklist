@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSchedule } from './hooks/useSchedule';
 import { useChecklist } from './hooks/useChecklist';
+import { useWakeLock } from './hooks/useWakeLock';
 import { Header } from './components/Header';
 import { ProgressBar } from './components/ProgressBar';
 import { TaskCard } from './components/TaskCard';
@@ -13,7 +14,8 @@ export const App: React.FC = () => {
     isWeekday,
     activeRoutineType,
     activeRoutine,
-    nextRoutineInfo
+    nextRoutineInfo,
+    isDemo
   } = useSchedule();
 
   const {
@@ -27,6 +29,15 @@ export const App: React.FC = () => {
     resetRoutine
   } = useChecklist(activeRoutine);
 
+  // Keep screen awake while a checklist is active/being worked on
+  const { isActive: isWakeLockActive, requestWakeLock } = useWakeLock(Boolean(activeRoutine));
+
+  const handleTaskToggle = useCallback((taskId: string, coords?: { x: number; y: number }) => {
+    // Acquire/refresh wake lock on user interaction
+    requestWakeLock();
+    toggleTask(taskId, coords);
+  }, [requestWakeLock, toggleTask]);
+
   const themeClass = activeRoutineType ? `theme-${activeRoutineType}` : 'theme-offhours';
   const hasItemsChecked = completedIds.size > 0;
   const remainingCount = totalMandatoryCount - completedMandatoryCount;
@@ -39,6 +50,8 @@ export const App: React.FC = () => {
           currentDate={currentDate}
           onReset={resetRoutine}
           hasItemsChecked={hasItemsChecked}
+          isDemo={isDemo}
+          isWakeLockActive={isWakeLockActive}
         />
 
         <main className="app-main-content">
@@ -65,7 +78,7 @@ export const App: React.FC = () => {
                       key={task.id}
                       task={task}
                       completed={isTaskCompleted(task.id)}
-                      onToggle={toggleTask}
+                      onToggle={handleTaskToggle}
                       isBonus={false}
                     />
                   ))}
@@ -76,7 +89,7 @@ export const App: React.FC = () => {
                 bonusTasks={activeRoutine.bonusTasks}
                 allMandatoryCompleted={allMandatoryCompleted}
                 completedIds={completedIds}
-                onToggle={toggleTask}
+                onToggle={handleTaskToggle}
                 remainingCount={remainingCount}
               />
             </div>

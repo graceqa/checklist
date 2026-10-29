@@ -260,6 +260,48 @@ button {
   opacity: 0.4;
 }
 
+.header-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wake-lock-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.15);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  letter-spacing: 0.02em;
+}
+
+.theme-evening .wake-lock-pill {
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.4);
+}
+
+.wake-lock-icon {
+  font-size: 0.78rem;
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.demo-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: #8b5cf6;
+  color: #ffffff;
+}
+
 .reset-button {
   padding: 6px 12px;
   font-size: 0.78rem;

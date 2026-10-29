@@ -17,6 +17,43 @@ const MORNING_END_MINUTES = 8 * 60;   // 08:00 (480)
 const EVENING_START_MINUTES = 16 * 60; // 16:00 (960)
 const EVENING_END_MINUTES = 20 * 60 + 30; // 20:30 (1230)
 
+export function detectDemoRoutine(pathname = '', hash = '', searchStr = ''): RoutineType | null {
+  const path = pathname.toLowerCase().replace(/\/$/, '');
+  const h = hash.toLowerCase();
+  
+  let queryDemo = '';
+  try {
+    const params = new URLSearchParams(searchStr);
+    queryDemo = (params.get('demo') || params.get('p') || '').toLowerCase();
+  } catch {
+    // Ignore URL parse error
+  }
+
+  // Morning checks
+  if (
+    path.endsWith('/demo/morning') ||
+    path.includes('/demo/morning') ||
+    h.includes('/demo/morning') ||
+    queryDemo === 'morning' ||
+    queryDemo.includes('/demo/morning')
+  ) {
+    return 'morning';
+  }
+
+  // Evening checks
+  if (
+    path.endsWith('/demo/evening') ||
+    path.includes('/demo/evening') ||
+    h.includes('/demo/evening') ||
+    queryDemo === 'evening' ||
+    queryDemo.includes('/demo/evening')
+  ) {
+    return 'evening';
+  }
+
+  return null;
+}
+
 export function resolveDetectedRoutine(date: Date): ActiveRoutineState {
   const isWeekday = isWeekdayDate(date);
   if (!isWeekday) {
@@ -46,27 +83,21 @@ function calculateNextRoutine(now: Date): NextRoutineInfo {
   // Check if today is a weekday
   if (day >= 1 && day <= 5) {
     if (mins < MORNING_START_MINUTES) {
-      // Earlier today morning
       target.setHours(6, 0, 0, 0);
       routineName = 'Morning Checklist';
     } else if (mins < EVENING_START_MINUTES) {
-      // Today evening
       target.setHours(16, 0, 0, 0);
       routineName = 'Evening Checklist';
     } else {
-      // After evening cutoff on a weekday
       routineName = 'Morning Checklist';
       if (day === 5) {
-        // Friday night -> next is Monday
         target.setDate(now.getDate() + 3);
       } else {
-        // Mon-Thu night -> next is tomorrow
         target.setDate(now.getDate() + 1);
       }
       target.setHours(6, 0, 0, 0);
     }
   } else {
-    // Weekend (Saturday=6, Sunday=0)
     routineName = 'Morning Checklist';
     const daysUntilMonday = day === 6 ? 2 : 1;
     target.setDate(now.getDate() + daysUntilMonday);
@@ -101,6 +132,16 @@ function calculateNextRoutine(now: Date): NextRoutineInfo {
 export function useSchedule() {
   const [currentDate, setCurrentDate] = useState<Date>(() => new Date());
 
+  // Check direct path demo
+  const demoRoutine = useMemo(() => {
+    if (typeof window === 'undefined') return null;
+    return detectDemoRoutine(
+      window.location.pathname,
+      window.location.hash,
+      window.location.search
+    );
+  }, []);
+
   // Keep live time ticking every second to automatically enter/exit routines
   useEffect(() => {
     const timer = setInterval(() => {
@@ -112,10 +153,14 @@ export function useSchedule() {
   const detectedState = useMemo(() => resolveDetectedRoutine(currentDate), [currentDate]);
 
   const activeRoutineType: RoutineType | null = useMemo(() => {
+    // If a demo path is accessed, surface that checklist directly
+    if (demoRoutine) return demoRoutine;
+
+    // Otherwise, strictly follow live scheduled time
     if (detectedState === 'morning') return 'morning';
     if (detectedState === 'evening') return 'evening';
     return null;
-  }, [detectedState]);
+  }, [demoRoutine, detectedState]);
 
   const activeRoutine: RoutineConfig | null = activeRoutineType ? ROUTINES[activeRoutineType] : null;
 
@@ -129,6 +174,7 @@ export function useSchedule() {
     detectedState,
     activeRoutineType,
     activeRoutine,
-    nextRoutineInfo
+    nextRoutineInfo,
+    isDemo: Boolean(demoRoutine)
   };
 }

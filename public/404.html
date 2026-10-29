@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Daily Checklist</title>
+    <script>
+      // Single Page App redirect for GitHub Pages
+      var path = window.location.pathname;
+      var repo = '/checklist';
+      var relativePath = path.indexOf(repo) === 0 ? path.substring(repo.length) : path;
+      var query = window.location.search;
+      var hash = window.location.hash;
+      window.location.replace(repo + '/?p=' + encodeURIComponent(relativePath + query) + hash);
+    </script>
+  </head>
+  <body></body>
+</html>

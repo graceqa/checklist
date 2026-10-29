@@ -6,13 +6,17 @@ interface HeaderProps {
   currentDate: Date;
   onReset: () => void;
   hasItemsChecked: boolean;
+  isDemo?: boolean;
+  isWakeLockActive?: boolean;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   routine,
   currentDate,
   onReset,
-  hasItemsChecked
+  hasItemsChecked,
+  isDemo = false,
+  isWakeLockActive = false
 }) => {
   const [showConfirmReset, setShowConfirmReset] = useState(false);
 
@@ -40,7 +44,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="app-header">
-      {/* Top live clock and reset row */}
+      {/* Top live clock, awake indicator, and reset row */}
       <div className="header-top-row">
         <div className="live-clock-badge">
           <span className="live-dot" />
@@ -49,16 +53,25 @@ export const Header: React.FC<HeaderProps> = ({
           <span className="time-str">{formattedTime}</span>
         </div>
 
-        {hasItemsChecked && (
-          <button
-            type="button"
-            className={`reset-button ${showConfirmReset ? 'confirming' : ''}`}
-            onClick={handleResetClick}
-            title="Reset checks"
-          >
-            {showConfirmReset ? 'Confirm Reset?' : 'Reset'}
-          </button>
-        )}
+        <div className="header-actions-group">
+          {isWakeLockActive && (
+            <span className="wake-lock-pill" title="Screen will stay awake while checklist is open">
+              <span className="wake-lock-icon">🔆</span>
+              <span className="wake-lock-text">Awake</span>
+            </span>
+          )}
+
+          {hasItemsChecked && (
+            <button
+              type="button"
+              className={`reset-button ${showConfirmReset ? 'confirming' : ''}`}
+              onClick={handleResetClick}
+              title="Reset checks"
+            >
+              {showConfirmReset ? 'Confirm Reset?' : 'Reset'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Active routine banner */}
@@ -69,7 +82,11 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div className="routine-info">
             <div className="routine-badge-row">
-              <span className="schedule-badge">{routine.badge}</span>
+              {isDemo ? (
+                <span className="demo-badge">Demo Mode 🧪</span>
+              ) : (
+                <span className="schedule-badge">{routine.badge}</span>
+              )}
               <span className="window-badge">{routine.timeWindowLabel}</span>
             </div>
             <h1 className="routine-title">{routine.title}</h1>
