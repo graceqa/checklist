@@ -104,7 +104,7 @@ export const App: React.FC = () => {
 
         <footer className="app-footer">
           <p className="footer-schedule-note">
-            ☀️ Morning: 6–8 AM &nbsp;•&nbsp; 🌙 Evening: 4–8:30 PM (Mon–Fri)
+            ☀️ Morning: 5–8 AM &nbsp;•&nbsp; 🌙 Evening: 3:30–9 PM (Mon–Fri)
           </p>
         </footer>
       </div>

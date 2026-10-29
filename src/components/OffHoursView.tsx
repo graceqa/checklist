@@ -55,11 +55,11 @@ export const OffHoursView: React.FC<OffHoursViewProps> = ({
         <h4 className="rules-heading">Active Routine Hours (Weekdays)</h4>
         <div className="schedule-rule-row">
           <div className="rule-badge morning">☀️ Morning Routine</div>
-          <div className="rule-time">6:00 AM – 8:00 AM</div>
+          <div className="rule-time">5:00 AM – 8:00 AM</div>
         </div>
         <div className="schedule-rule-row">
           <div className="rule-badge evening">🌙 Evening Routine</div>
-          <div className="rule-time">4:00 PM – 8:30 PM</div>
+          <div className="rule-time">3:30 PM – 9:00 PM</div>
         </div>
       </div>
     </div>

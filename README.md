@@ -4,15 +4,15 @@ A simple, mobile-optimized daily routine checklist built with React, Vite, and T
 
 ## 🕒 Routine Schedule
 
-- **☀️ Morning Routine:** Weekdays (Monday – Friday) between **6:00 AM – 8:00 AM**
-- **🌙 Evening Routine:** Weekdays (Monday – Friday) between **4:00 PM – 8:30 PM**
+- **☀️ Morning Routine:** Weekdays (Monday – Friday) between **5:00 AM – 8:00 AM**
+- **🌙 Evening Routine:** Weekdays (Monday – Friday) between **3:30 PM – 9:00 PM**
 - **🌿 Off-Hours / Weekends:** Displays a restful screen with a countdown to the next scheduled routine.
 
 ---
 
 ## 📋 Checklist Tasks (from `to do list.pdf`)
 
-### Morning Routine (6:00 AM – 8:00 AM)
+### Morning Routine (5:00 AM – 8:00 AM)
 1. Drink water
 2. Change
 3. Eat breakfast
@@ -29,7 +29,7 @@ A simple, mobile-optimized daily routine checklist built with React, Vite, and T
 
 ---
 
-### Evening Routine (4:00 PM – 8:30 PM)
+### Evening Routine (3:30 PM – 9:00 PM)
 1. Charge watch
 2. Do homework
 3. Eat dinner

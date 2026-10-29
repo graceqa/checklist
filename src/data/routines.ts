@@ -5,7 +5,7 @@ export const ROUTINES: Record<RoutineType, RoutineConfig> = {
     id: 'morning',
     title: 'Morning Routine',
     subtitle: 'Rise & shine! Get ready for a great day ahead.',
-    timeWindowLabel: '6:00 AM – 8:00 AM (Weekdays)',
+    timeWindowLabel: '5:00 AM – 8:00 AM (Weekdays)',
     badge: 'Morning Checklist',
     icon: '☀️',
     tasks: [
@@ -28,7 +28,7 @@ export const ROUTINES: Record<RoutineType, RoutineConfig> = {
     id: 'evening',
     title: 'Evening Routine',
     subtitle: 'Wind down and prepare for tomorrow.',
-    timeWindowLabel: '4:00 PM – 8:30 PM (Weekdays)',
+    timeWindowLabel: '3:30 PM – 9:00 PM (Weekdays)',
     badge: 'Evening Checklist',
     icon: '🌙',
     tasks: [

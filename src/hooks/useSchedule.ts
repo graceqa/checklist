@@ -12,10 +12,10 @@ function getMinutesOfDay(date: Date): number {
   return date.getHours() * 60 + date.getMinutes();
 }
 
-const MORNING_START_MINUTES = 6 * 60; // 06:00 (360)
+const MORNING_START_MINUTES = 5 * 60; // 05:00 (300)
 const MORNING_END_MINUTES = 8 * 60;   // 08:00 (480)
-const EVENING_START_MINUTES = 16 * 60; // 16:00 (960)
-const EVENING_END_MINUTES = 20 * 60 + 30; // 20:30 (1230)
+const EVENING_START_MINUTES = 15 * 60 + 30; // 15:30 (930)
+const EVENING_END_MINUTES = 21 * 60; // 21:00 (1260)
 
 export function detectDemoRoutine(pathname = '', hash = '', searchStr = ''): RoutineType | null {
   const path = pathname.toLowerCase().replace(/\/$/, '');
@@ -83,10 +83,10 @@ function calculateNextRoutine(now: Date): NextRoutineInfo {
   // Check if today is a weekday
   if (day >= 1 && day <= 5) {
     if (mins < MORNING_START_MINUTES) {
-      target.setHours(6, 0, 0, 0);
+      target.setHours(5, 0, 0, 0);
       routineName = 'Morning Checklist';
     } else if (mins < EVENING_START_MINUTES) {
-      target.setHours(16, 0, 0, 0);
+      target.setHours(15, 30, 0, 0);
       routineName = 'Evening Checklist';
     } else {
       routineName = 'Morning Checklist';
@@ -95,13 +95,13 @@ function calculateNextRoutine(now: Date): NextRoutineInfo {
       } else {
         target.setDate(now.getDate() + 1);
       }
-      target.setHours(6, 0, 0, 0);
+      target.setHours(5, 0, 0, 0);
     }
   } else {
     routineName = 'Morning Checklist';
     const daysUntilMonday = day === 6 ? 2 : 1;
     target.setDate(now.getDate() + daysUntilMonday);
-    target.setHours(6, 0, 0, 0);
+    target.setHours(5, 0, 0, 0);
   }
 
   const diffMs = Math.max(0, target.getTime() - now.getTime());
