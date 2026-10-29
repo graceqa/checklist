@@ -1,3 +1,7 @@
+Live site: https://github.com/graceqa/checklist
+morning list demo: https://github.com/graceqa/checklist/demo/morning
+evening list demo: https://github.com/graceqa/checklist/demo/evening
+
 # Daily Checklist ☀️🌙
 
 A simple, mobile-optimized daily routine checklist built with React, Vite, and TypeScript. Automatically surfaces the appropriate morning or evening checklist based on the time of day, keeps progress in session memory, and unlocks bonus activities when all mandatory tasks are completed.
