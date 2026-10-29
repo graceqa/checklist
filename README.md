@@ -1,6 +1,6 @@
-- Live site: https://github.com/graceqa/checklist
-- morning list demo: https://github.com/graceqa/checklist/demo/morning
-- evening list demo: https://github.com/graceqa/checklist/demo/evening
+- Live site: https://graceqa.github.io/checklist
+- morning list demo: https://graceqa.github.io/checklist/demo/morning
+- evening list demo: https://graceqa.github.io/checklist/demo/evening
 
 # Daily Checklist ☀️🌙
 
